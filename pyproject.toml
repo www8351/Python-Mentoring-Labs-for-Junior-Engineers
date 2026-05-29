@@ -5,7 +5,7 @@ description = "Small Python labs as pure, tested functions with a CLI."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "typer>=0.12",
+    "typer>=0.26.3",
     "rich>=13.7",
 ]
 
