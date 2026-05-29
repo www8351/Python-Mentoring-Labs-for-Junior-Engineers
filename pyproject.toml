@@ -14,7 +14,7 @@ labs = "labs.cli:app"
 
 [dependency-groups]
 dev = [
-    "ruff>=0.6",
+    "ruff>=0.15.15",
     "mypy>=1.11",
     "pytest>=8.3",
     "pre-commit>=3.8",
