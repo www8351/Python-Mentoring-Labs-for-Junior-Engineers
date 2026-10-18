@@ -3,9 +3,9 @@ name = "labs"
 version = "0.1.0"
 description = "Small Python labs as pure, tested functions with a CLI."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
-    "typer>=0.27.0",
+    "typer>=0.27.3",
     "rich>=15.0.0",
 ]
 
@@ -14,10 +14,11 @@ labs = "labs.cli:app"
 
 [dependency-groups]
 dev = [
-    "ruff>=0.15.22",
-    "mypy>=2.3.0",
+    "ruff>=0.17.0",
+    "mypy>=2.4.0",
     "pytest>=9.1.1",
-    "pre-commit>=3.8",
+    "pre-commit>=4.6.2",
+    "pytest-cov>=7.1.0",
 ]
 
 [build-system]
@@ -29,7 +30,6 @@ packages = ["src/labs"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "C4", "PTH", "RET", "ARG", "TC", "PL", "A"]
@@ -38,7 +38,7 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "C4", "PTH", "RET", "ARG", "TC
 "tests/**" = ["ARG", "PLR2004", "S101"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 strict = true
 warn_unreachable = true
 enable_error_code = ["redundant-expr", "truthy-bool"]
