@@ -3,9 +3,9 @@
 ## ISSUES
 
 ```
-Issue:  Phase 1 (infra and tooling) is committed locally in 4010644, ee0a931, 672150d, 09c413c and waits for owner review.
-Action: Owner reviews phase 1. Phase 2 starts only on owner instruction. Push is not authorized for phase 1 yet.
-Status: OPEN
+Issue:  Phase 0 and phase 1 are on branch ccr-a62d60e9-wykx88 and not yet on main.
+Action: Owner instructed on 2026-10-18 to push and merge, and to stop and report on any problem. Push the branch, open a PR to main, wait for green CI, merge. Phase 2 starts only on a new owner instruction.
+Status: IN PROGRESS
 ```
 
 ```
