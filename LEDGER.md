@@ -9,12 +9,6 @@ Status: OPEN
 ```
 
 ```
-Issue:  Commits exist only inside an ephemeral cloud container. Unpushed work is lost when the container is reclaimed.
-Action: Owner decides when to push branch ccr-a62d60e9-wykx88. Executor never pushes without an explicit instruction.
-Status: BLOCKED (owner)
-```
-
-```
 Issue:  Phase 1, infra and tooling. uv.lock is stale (records typer>=0.12, ruff>=0.6, mypy>=1.11) and CI re-locks silently. pre-commit pins ruff v0.9.6 and mirrors-mypy v1.15.0. Dependabot uses the pip ecosystem and never updates uv.lock. Python 3.10 is end of life.
 Action: requires-python >=3.11, raise floors (ruff>=0.17.0, typer>=0.27.3, mypy>=2.4.0, pre-commit>=4.6.2), add pytest-cov, uv lock. CI with UV_LOCKED=1, UV_PYTHON per matrix leg, matrix 3.11 to 3.14, build job with wheel smoke test, workflow_call reused by release.yml with tag/version check. Dependabot ecosystem uv. pre-commit local hooks via uv run. Hatch dynamic version, __main__.py, py.typed, --version flag, required future import. Fix the two broken README anchors only.
 Status: OPEN
@@ -63,6 +57,12 @@ Status: BLOCKED (owner)
 ```
 
 ## ACTIONS
+
+```
+Issue:  2026-10-18. Phase 0 commits existed only inside an ephemeral cloud container.
+Action: Owner instructed a push without a pull request and without a merge. Branch ccr-a62d60e9-wykx88 pushed to origin. No PR opened, main untouched.
+Status: DONE
+```
 
 ```
 Issue:  2026-10-18. Phase 0, management files.
