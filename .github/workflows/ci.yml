@@ -4,6 +4,7 @@ on:
   push:
     branches: ["**"]
   pull_request:
+  workflow_call:
 
 # Cancel superseded runs on the same ref.
 concurrency:
@@ -16,19 +17,22 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    env:
+      UV_LOCKED: "1"
+      UV_PYTHON: "3.13"
     steps:
       - uses: actions/checkout@v7
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v10.3.0
         with:
           enable-cache: true
 
       - name: Set up Python
-        run: uv python install 3.12
+        run: uv python install "$UV_PYTHON"
 
       - name: Sync dependencies
-        run: uv sync --all-extras --dev
+        run: uv sync
 
       - name: Ruff lint
         run: uv run ruff check .
@@ -37,27 +41,55 @@ jobs:
         run: uv run ruff format --check .
 
       - name: Mypy
-        run: uv run mypy src tests
+        run: uv run mypy
 
   test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+    env:
+      UV_LOCKED: "1"
+      # Pin the interpreter for every uv command, not just the install step.
+      UV_PYTHON: ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v7
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v10.3.0
         with:
           enable-cache: true
 
       - name: Set up Python ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
+        run: uv python install "$UV_PYTHON"
 
       - name: Sync dependencies
-        run: uv sync --all-extras --dev
+        run: uv sync
+
+      - name: Show interpreter
+        run: uv run python -V
 
       - name: Tests
-        run: uv run pytest -q
+        run: uv run pytest
+
+  build:
+    runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.13"
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.0
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install "$UV_PYTHON"
+
+      - name: Build distributions
+        run: uv build
+
+      - name: Smoke test the wheel
+        run: uv run --isolated --no-project --with dist/*.whl labs --help

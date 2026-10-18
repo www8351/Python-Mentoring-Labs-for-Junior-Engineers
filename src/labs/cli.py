@@ -3,14 +3,36 @@
 from __future__ import annotations
 
 import random
+from typing import Annotated
 
 import typer
 from rich.console import Console
 
-from labs import arithmetic, lottery, money, text
+from labs import __version__, arithmetic, lottery, money, text
 
 app = typer.Typer(help="Small Python labs as CLI commands.", no_args_is_help=True)
 console = Console()
+
+
+def _show_version(value: bool) -> None:
+    if value:
+        console.print(f"labs {__version__}")
+        raise typer.Exit
+
+
+@app.callback()
+def main(
+    _version: Annotated[
+        bool,
+        typer.Option(
+            "--version",
+            callback=_show_version,
+            is_eager=True,
+            help="Show the version and exit.",
+        ),
+    ] = False,
+) -> None:
+    """Small Python labs as CLI commands."""
 
 
 @app.command("multiplication-table")

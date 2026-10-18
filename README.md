@@ -23,7 +23,7 @@ Each lab is a small, self-contained exercise a pure typed function you can read,
 ## 📖 Table of contents
 
 - [Who this is for](#-who-this-is-for)
-- [Curriculum index — what each lab teaches](#-curriculum-index--what-each-lab-teaches)
+- [Curriculum index — what each lab teaches](#-curriculum-index-what-each-lab-teaches)
 - [Cross-cutting engineering concepts](#-cross-cutting-engineering-concepts)
 - [Install & run](#-install--run)
 - [How to use this repository for self-study](#-how-to-use-this-repository-for-self-study)
@@ -155,7 +155,7 @@ purpose** to understand why they're built the way they are.
 
 ### 1. Follow the path in order
 
-Work the labs **1 → 7** as listed in the [curriculum index](#-curriculum-index--what-each-lab-teaches).
+Work the labs **1 → 7** as listed in the [curriculum index](#-curriculum-index-what-each-lab-teaches).
 They escalate from "warm-up" to "this one had a real, subtle bug," so each lab
 prepares you for the next.
 
