@@ -5,28 +5,47 @@ on:
     tags: ["v*"]
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
   release:
+    needs: ci
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      UV_PYTHON: "3.13"
     steps:
       - uses: actions/checkout@v7
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v10.3.0
         with:
           enable-cache: true
 
       - name: Set up Python
-        run: uv python install 3.12
+        run: uv python install "$UV_PYTHON"
+
+      - name: Check the tag matches the package version
+        run: |
+          version="$(uv run --frozen python -c 'import labs; print(labs.__version__)')"
+          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match package version ${version}"
+            exit 1
+          fi
 
       - name: Build distributions
         run: uv build
+
+      - name: Smoke test the wheel
+        run: uv run --isolated --no-project --with dist/*.whl labs --help
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
