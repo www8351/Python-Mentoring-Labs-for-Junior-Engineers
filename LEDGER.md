@@ -3,15 +3,21 @@
 ## ISSUES
 
 ```
-Issue:  Phase 0 (management files) is committed locally and waits for owner review.
-Action: Owner reviews CLAUDE.md, LEDGER.md and the .gitignore block. Phase 1 starts only on owner instruction.
+Issue:  Phase 1 (infra and tooling) is committed locally in 4010644, ee0a931, 672150d, 09c413c and waits for owner review.
+Action: Owner reviews phase 1. Phase 2 starts only on owner instruction. Push is not authorized for phase 1 yet.
 Status: OPEN
 ```
 
 ```
-Issue:  Phase 1, infra and tooling. uv.lock is stale (records typer>=0.12, ruff>=0.6, mypy>=1.11) and CI re-locks silently. pre-commit pins ruff v0.9.6 and mirrors-mypy v1.15.0. Dependabot uses the pip ecosystem and never updates uv.lock. Python 3.10 is end of life.
-Action: requires-python >=3.11, raise floors (ruff>=0.17.0, typer>=0.27.3, mypy>=2.4.0, pre-commit>=4.6.2), add pytest-cov, uv lock. CI with UV_LOCKED=1, UV_PYTHON per matrix leg, matrix 3.11 to 3.14, build job with wheel smoke test, workflow_call reused by release.yml with tag/version check. Dependabot ecosystem uv. pre-commit local hooks via uv run. Hatch dynamic version, __main__.py, py.typed, --version flag, required future import. Fix the two broken README anchors only.
-Status: OPEN
+Issue:  The new CI has never run on GitHub. setup-uv is pinned to tag v10.3.0, found by web search and not confirmed against the action repository. UV_LOCKED, UV_PYTHON per matrix leg, the build job and the workflow_call reuse are verified only by local simulation.
+Action: Confirm on the first CI run after the owner authorizes a push. If v10.3.0 does not resolve, pin the version the action repository lists as latest.
+Status: BLOCKED (owner, needs push)
+```
+
+```
+Issue:  uv 0.13 makes Python 3.15 its default stable Python. The CI matrix stays 3.11 to 3.14 per the FINAL Python decision.
+Action: None by the executor. Extending the matrix to 3.15 needs a new owner decision.
+Status: OPEN (owner)
 ```
 
 ```
@@ -46,7 +52,7 @@ Status: OPEN
 
 ```
 Issue:  Phase 7, docs and release. README is not bilingual, has grammar broken by dash removal, and claims full coverage without a tool. CHANGELOG links point to the wrong repository.
-Action: Full README rewrite, English section then Hebrew section, 13 lab curriculum, dev commands identical to CI. CHANGELOG 0.2.0. Version 0.2.0 then uv lock. Tag is created by the owner after merge.
+Action: Full README rewrite, English section then Hebrew section, 13 lab curriculum, dev commands identical to CI. CHANGELOG 0.2.0. Version 0.2.0 in src/labs/__init__.py (uv.lock no longer stores the project version). Tag is created by the owner after merge.
 Status: OPEN
 ```
 
@@ -57,6 +63,18 @@ Status: BLOCKED (owner)
 ```
 
 ## ACTIONS
+
+```
+Issue:  2026-10-18. Phase 1, infra and tooling. Owner approved phase 0 and instructed to continue.
+Action: 4010644 requires-python >=3.11, floors ruff>=0.17.0 typer>=0.27.3 mypy>=2.4.0 pre-commit>=4.6.2, pytest-cov added, uv.lock regenerated (it still recorded typer>=0.12, ruff>=0.6, mypy>=1.11). ee0a931 CI: UV_LOCKED=1, UV_PYTHON per job, matrix 3.11 to 3.14, setup-uv v3 to v10.3.0, build job with wheel smoke test; release.yml reuses ci.yml via workflow_call, checks tag against version, contents: write only on the release job; Dependabot ecosystem pip to uv. 672150d pre-commit: ruff and mypy as local hooks via uv run --frozen, uv lock --check hook, pre-commit-hooks v6.0.0 (rev confirmed by a successful hook install). 09c413c hatch dynamic version from src/labs/__init__.py, __main__.py, py.typed, --version option with a CliRunner test, required future import, two README anchors fixed. Tried: uv lock --check failed once after the dynamic version change because the lock still stored version 0.1.0; uv lock removed that line.
+Status: DONE
+```
+
+```
+Issue:  2026-10-18. Phase 0 review.
+Action: Owner approved phase 0 and instructed phase 1 to run.
+Status: DONE
+```
 
 ```
 Issue:  2026-10-18. Phase 0 commits existed only inside an ephemeral cloud container.
