@@ -11,3 +11,19 @@ dist/
 # Environments
 .venv/
 .env
+
+# Coverage
+.coverage
+htmlcov/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+
+# Markdown: only these are tracked. Keep the *.md line exact.
+*.md
+!README.md
+!CHANGELOG.md
+!/LEDGER.md
+!/CLAUDE.md
